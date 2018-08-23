@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title></title>
 </head>
 <body>
@@ -29,20 +30,33 @@
             <input id="fonte" type="button" value="RESET" class="btnNum" onclick="clearEverything()" />
         </div>
         <div class="rowsNumPad">
-            <input id="fonte"  type="button" value="graus" class="btnNum" onclick='functionConfirm("Celsius para Farenheit", function yes() {
-            alert("Graus Para Farenheit")
+            <input id="fonte"  type="button" value="°F e °C" class="btnNum" onclick='functionConfirm("Celsius para Farenheit", function yes() {
+
+            gtof();
          }, function no() {
-            alert("no")
+
+            ftog();
          }
       );'>
-            <input id="fonte"  type="button" value="iegar" class="btnNum" onclick="writeNumbers(this.value)" />
-            <input id="fonte" type="button" value="baskara" class="btnNum" onclick="calculateResult()" />
+            <input id="fonte"  type="button" value="°C e Kelvin" class="btnNum" onclick='functionConfirm2("Celsius para Kelvin", function yes() {
+
+            gtok();
+         }, function no() {
+   
+            ktog();
+         }
+      );'/>
+            <input id="fonte" type="button" value="°F e Kelvin" class="btnNum" onclick='functionConfirm3("Fahrenheit para Kelvin", function yes() {
+       
+            ftok();
+         }, function no() {
+     
+            ktof();
+         }
+      );' />
         </div>
     </div>
-    <!--   End class numericPad -->
 
-
-    <!--   End class extraFuntionPad -->
 </div>
 
 
@@ -53,9 +67,27 @@
 
             <button class="cancel">Cancel</button>
          </div>
+
+
+         <div id="confirm2">
+         <div class="message2"></div>
+            <button class="yes">Graus para Kelvin</button>
+            <button class="no">Kelvin para graus</button>
+
+            <button class="cancel">Cancel</button>
+         </div>
+
+         <div id="confirm3">
+         <div class="message3"></div>
+            <button class="yes">Fahrenheit para Kelvin</button>
+            <button class="no">Kelvin para Fahrenheit</button>
+
+            <button class="cancel">Cancel</button>
+         </div>
          
 </body>
 <style type="text/css">
+
       #confirm {
             display: none;
             background-color: #ddddff;
@@ -79,6 +111,56 @@
             cursor: pointer;
          }
          #confirm .message {
+            text-align: left;
+         }
+          #confirm3 {
+            display: none;
+            background-color: #ddddff;
+            border: 1px solid #aaa;
+            position: fixed;
+            width: 250px;
+            left: 50%;
+            margin-left: -100px;
+            padding: 6px 8px 8px;
+            box-sizing: border-box;
+            text-align: center;
+         }
+         #confirm3 button {
+            background-color: #48E5DA;
+            display: inline-block;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+            padding: 5px;
+            text-align: center;
+            width: 80px;
+            cursor: pointer;
+         }
+         #confirm3 .message {
+            text-align: left;
+         }
+         #confirm2 {
+            display: none;
+            background-color: #ddddff;
+            border: 1px solid #aaa;
+            position: fixed;
+            width: 250px;
+            left: 50%;
+            margin-left: -100px;
+            padding: 6px 8px 8px;
+            box-sizing: border-box;
+            text-align: center;
+         }
+         #confirm2 button {
+            background-color: #48E5DA;
+            display: inline-block;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+            padding: 5px;
+            text-align: center;
+            width: 80px;
+            cursor: pointer;
+         }
+         #confirm2 .message2 {
             text-align: left;
          }
 
@@ -208,6 +290,7 @@ var operator = "";
         number2 += number;
         txtScreen.value += number;
     };
+
 }
 function clearEverything() {
     number1 = 0;
@@ -216,14 +299,69 @@ function clearEverything() {
     txtScreen.value = "";
 }
 
+function gtof(){
+var g =number1 * 9 / 5 + 32;
+txtScreen.value = "";
+txtScreen.value = g;
+}
 
+function ftog(){
+var f =(number1 -32) *5 /9;
+txtScreen.value = "";
+txtScreen.value = f;
+}
 
+function gtok(){
+    var k =number1/1 + 273;
+txtScreen.value = "";
+txtScreen.value = k;
+}
+function ktog(){
+    var n =number1-273;
+txtScreen.value = "";
+txtScreen.value = n;
+}
+function ftok(){
+    var n =(number1 -32) *5 /9;
+    n =n/1 + 273
+txtScreen.value = "";
+txtScreen.value = n;
+}
+function ktof(){
+    var n =number1 -273;
+    n= n* 9 / 5 + 32
+txtScreen.value = "";
+txtScreen.value = n;
+}
 </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script>
          function functionConfirm(msg, myYes, myNo, cancel) {
             var confirmBox = $("#confirm");
             confirmBox.find(".message").text(msg);
+            confirmBox.find(".yes,.no,.cancel").unbind().click(function() {
+               confirmBox.hide();
+            });
+            confirmBox.find(".yes").click(myYes);
+            confirmBox.find(".no").click(myNo);
+            confirmBox.find(".no").click(cancel);
+            confirmBox.show();
+         }
+
+          function functionConfirm2(msg, myYes, myNo, cancel) {
+            var confirmBox = $("#confirm2");
+            confirmBox.find(".message2").text(msg);
+            confirmBox.find(".yes,.no,.cancel").unbind().click(function() {
+               confirmBox.hide();
+            });
+            confirmBox.find(".yes").click(myYes);
+            confirmBox.find(".no").click(myNo);
+            confirmBox.find(".no").click(cancel);
+            confirmBox.show();
+         }
+         function functionConfirm3(msg, myYes, myNo, cancel) {
+            var confirmBox = $("#confirm3");
+            confirmBox.find(".message3").text(msg);
             confirmBox.find(".yes,.no,.cancel").unbind().click(function() {
                confirmBox.hide();
             });
